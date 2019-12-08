@@ -9,8 +9,35 @@ import (
 
 func main() {
 
-	fmt.Printf("advent01 %f\n", advent01())
-	fmt.Printf("advent02 %f\n", advent02())
+	x, y := adventCombined()
+
+	fmt.Printf("adventCombined 1.1: %f 1.2: %f \n", x, y)
+	fmt.Printf("advent01: %f\n", advent01())
+	fmt.Printf("advent02: %f\n", advent02())
+}
+
+func adventCombined() (totalFuel float64, combinedFuel float64) {
+	var inputValues = strings.Split(input, "\n")
+
+	for _, line := range inputValues {
+
+		mass, _ := strconv.Atoi(line)
+		initialFuel := fuelCalc(float64(mass))
+		totalFuel += initialFuel
+		combinedFuel += initialFuel
+
+		for initialFuel > 0 {
+			initialFuel = fuelCalc(initialFuel)
+
+			if initialFuel < 0 {
+				continue
+			}
+
+			combinedFuel += initialFuel
+		}
+	}
+
+	return
 }
 
 func advent01() float64 {
